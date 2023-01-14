@@ -1,4 +1,5 @@
 import justpy as jp
+from webapp import layout
 
 
 class Home:
@@ -6,44 +7,23 @@ class Home:
 
     @classmethod
     def serve(cls, req):
-        wp = jp.QuasarPage()
-        layout = jp.QLayout(a=wp, view="hhh lpR fFf", classes="h-screen")
-        header = jp.QHeader(a=layout)
-        toolbar = jp.QToolbar(a=header)
+        wp = jp.QuasarPage(tailwind=True)
 
-        drawer = jp.QDrawer(a=layout, show_if_Above=True, v_model="left",
-                            bordered=True)
-        scroller = jp.QScrollArea(a=drawer, classes="fit")
-        q_list = jp.QList(a=scroller)
-        a_classes = "p-2 m-2 text-lg text-blue-400 hover:text-blue-700"
-        jp.A(a=q_list, text="Home", href="/", classes=a_classes)
-        jp.Br(a=q_list)
-        jp.A(a=q_list, text="Dictionary", href="/dictionary", classes=a_classes)
-        jp.Br(a=q_list)
-        jp.A(a=q_list, text="About", href="/about", classes=a_classes)
-        jp.Br(a=q_list)
+        lay = layout.DefaultLayout(a=wp)
+        container = jp.QPageContainer(a=lay)
 
-        jp.QBtn(a=toolbar, dense=True, flat=True, round=True, icon="menu",
-                click=cls.move_drawer, drawer=drawer)
-        jp.QToolbar(a=toolbar, text="Instant Dictionary")
-        container = jp.QPageContainer(a=layout)
         div = jp.Div(a=container, classes="bg-gray-200 h-screen p-2")
         jp.Div(a=div, text="This is the Home page", classes="text-4xl m2")
         jp.Div(a=div, text=""" An online dictionary is a dictionary that is accessible via the Internet through a web browser.
-         They can be made available in a number of ways: free, free with a paid subscription for extended or more professional content,
-          or a paid-only service. Many dictionaries have been digitized from their print versions and are available at online libraries.
-           Some online dictionaries are organized as lists of words, similar to a glossary, while others offer search features,
+            They can be made available in a number of ways: free, free with a paid subscription for extended or more professional content,
+            or a paid-only service. Many dictionaries have been digitized from their print versions and are available at online libraries.
+            Some online dictionaries are organized as lists of words, similar to a glossary, while others offer search features,
             reverse lookups, and additional language tools and content such as verb conjugations,
-             grammar references, and discussion forums. The variety of online dictionaries for specialized topics is enormous,
-              covering a wide range of fields such as computing, business and investing, along with almost any other class of trade,
-               science, art, or common interest with its own terminology. """)
+            grammar references, and discussion forums. The variety of online dictionaries for specialized topics is enormous,
+            covering a wide range of fields such as computing, business and investing, along with almost any other class of trade,
+            science, art, or common interest with its own terminology. """)
+
         return wp
 
-    @staticmethod
-    def move_drawer(widget, msg):
-        if not widget.drawer.value:
-            widget.drawer.value = True
-        else:
-            widget.drawer.value = False
 
 
